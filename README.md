@@ -4,4 +4,7 @@
 
 *Date Start: 08/01/2024*
 
-<img src="/src/img/womakerscode.webp">
+
+<div align="center">
+    <img src="/src/img/womakerscode-icone.webp">
+</div>
