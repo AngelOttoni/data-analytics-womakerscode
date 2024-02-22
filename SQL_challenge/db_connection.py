@@ -25,3 +25,8 @@ def execute_query(connection, query, parameters=()):
     except sqlite3.Error as e:
         print("Error executing query:", e)
         return None
+
+def commit_changes(connection):
+    if connection:
+        connection.commit()
+        print("Records Saved!")
