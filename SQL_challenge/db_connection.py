@@ -26,7 +26,29 @@ def execute_query(connection, query, parameters=()):
         print("Error executing query:", e)
         return None
 
+def execute_query_sequence(connection, query, parameters):
+    """
+    Execute a command sequence on the database.
+
+    Args:
+        connection: SQLite database connection object.
+        command: SQL command to execute.
+        parameters: List of parameters to be used in the command.
+
+    Returns:
+        None
+    """
+    cursor = connection.cursor()
+    try:
+        cursor.executemany(query, parameters)
+    except Exception as error:
+        print('\n----- Error executing command:', error, ' -----')
+    finally:
+        print('\n----- Query executed successfully! -----')
+
+
 def commit_changes(connection):
     if connection:
         connection.commit()
+        # TO-DO Ajustar essa mensagem
         print("Records Saved!")
