@@ -1,7 +1,14 @@
-from db_connection import connect_to_database, execute_query, close_connection
+from db_connection import DatabaseManager
+
+"""
+5. Criar uma Tabela e Inserir Dados
+"""
+
+# Create an instance of DatabaseManager
+db_manager = DatabaseManager(db_path='./database.db')
 
 # Connect to the database
-connection = connect_to_database()
+db_manager.connect()
 
 # Create the "clientes" table
 create_table_query = '''
@@ -14,7 +21,7 @@ create_table_query = '''
     )
 '''
 # Execute the query to create the table
-execute_query(connection, create_table_query)
+db_manager.execute_query(create_table_query)
 
 # Close the connection
-close_connection(connection)
+db_manager.close_connection()

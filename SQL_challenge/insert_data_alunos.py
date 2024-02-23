@@ -1,7 +1,10 @@
-from db_connection import connect_to_database, close_connection, execute_query, commit_changes
+from db_connection import DatabaseManager
+
+# Create an instance of DatabaseManager
+db_manager = DatabaseManager(db_path='./database.db')
 
 # Connect to the database
-connection = connect_to_database()
+db_manager.connect()
 
 # Define the records to insert
 alunos_data = [
@@ -24,11 +27,10 @@ insert_query = '''
 '''
 
 # Execute the query for each student
-for aluno in alunos_data:
-    execute_query(connection, insert_query, aluno)
+db_manager.execute_query_sequence(insert_query, alunos_data)
 
 # Commit the transaction
-commit_changes(connection)
+db_manager.commit_changes()
 
 # Close the connection
-close_connection(connection)
+db_manager.close_connection()

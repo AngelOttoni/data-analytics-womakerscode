@@ -1,7 +1,14 @@
-from db_connection import connect_to_database, execute_query_sequence, commit_changes, close_connection
+from db_connection import DatabaseManager
+
+"""
+8. Junção de Tabelas
+"""
+
+# Create an instance of DatabaseManager
+db_manager = DatabaseManager(db_path='./database.db')
 
 # Connect to the database
-connection = connect_to_database()
+db_manager.connect()
 
 # Define the records to insert into the "clientes" table
 compras_data = [
@@ -29,10 +36,10 @@ insert_query = '''
 '''
 
 # Call the function to insert client records
-execute_query_sequence(connection, insert_query, compras_data)
+db_manager.execute_query_sequence(insert_query, compras_data)
 
 # Commit the transaction
-commit_changes(connection)
+db_manager.commit_changes()
 
 # Close the connection
-close_connection(connection)
+db_manager.close_connection()

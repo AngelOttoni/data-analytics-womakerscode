@@ -1,7 +1,19 @@
-from db_connection import connect_to_database, close_connection, execute_query, commit_changes
+from db_connection import DatabaseManager
+
+"""
+7. Atualização e Remoção com Condições
+a) Atualize o saldo de um cliente específico.
+b) Remova um cliente pelo seu ID.
+"""
+
+# Create an instance of DatabaseManager
+db_manager = DatabaseManager(db_path='./database.db')
+
+# Connect to the database
+db_manager.connect()
 
 # Use of functions to provide modularity and reuse of query scripting with conditionals
-def update_client_balance(connection, client_id, new_balance):
+def update_client_balance(client_id, new_balance):
     """
     Update the balance of a specific client.
 
@@ -14,15 +26,15 @@ def update_client_balance(connection, client_id, new_balance):
         None
     """
     update_query = '''
-        UPDATE clientes
+        UPDATE clientes_test
         SET saldo = ?
         WHERE id = ?
     '''
-    execute_query(connection, update_query, (new_balance, client_id))
-    commit_changes(connection)
+    db_manager.execute_query(update_query, (new_balance, client_id))
+    db_manager.commit_changes()
     print("Balance updated for client with ID", client_id)
 
-def remove_client_by_id(connection, client_id):
+def remove_client_by_id(client_id):
     """
     Remove a client by their ID.
 
@@ -33,20 +45,18 @@ def remove_client_by_id(connection, client_id):
     Returns:
         None
     """
-    remove_query = 'DELETE FROM clientes WHERE id = ?'
-    execute_query(connection, remove_query, (client_id,))
-    commit_changes(connection)
+    remove_query = 'DELETE FROM clientes_test WHERE id = ?'
+    db_manager.execute_query(remove_query, (client_id,))
+    db_manager.commit_changes()
     print("Client with ID", client_id, "removed")
 
-# Example usage:
-# Connect to the database
-connection = connect_to_database()
+# Resolution usage:
 
 # a) Update the balance of a specific client
-update_client_balance(connection, client_id=3, new_balance=3000.50)
+update_client_balance(client_id=3, new_balance=3000.50)
 
 # b) Remove a client by their ID
-remove_client_by_id(connection, client_id=9)
+remove_client_by_id(client_id=9)
 
 # Close the connection
-close_connection(connection)
+db_manager.close_connection()

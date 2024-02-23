@@ -1,11 +1,18 @@
-from db_connection import connect_to_database, close_connection, execute_query
+from db_connection import DatabaseManager
 
-def retrieve_compras_data(connection):
+"""
+8. Junção de Tabelas
+"""
+
+# Create an instance of DatabaseManager
+db_manager = DatabaseManager(db_path='./database.db')
+
+# Connect to the database
+db_manager.connect()
+
+def retrieve_compras_data():
     """
     Retrieve data from the "compras" table.
-
-    Args:
-        connection: SQLite database connection object.
 
     Returns:
         None
@@ -15,7 +22,7 @@ def retrieve_compras_data(connection):
         FROM compras
         INNER JOIN clientes ON compras.cliente_id = clientes.id
     '''
-    cursor = execute_query(connection, query)
+    cursor = db_manager.execute_query(query)
     rows = cursor.fetchall()
 
     print("Client Name | Product | Value")
@@ -23,12 +30,8 @@ def retrieve_compras_data(connection):
         print(row)
 
 # Resolution usage:
-
-# Connect to the database
-connection = connect_to_database()
-
 # Retrieve data from the "compras" table
-retrieve_compras_data(connection)
+retrieve_compras_data()
 
 # Close the connection
-close_connection(connection)
+db_manager.close_connection()
